@@ -1,535 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PDA / PDQ Online Calculator - Mostafa Hakim Shipping</title>
-  <style>
-    :root {
-      --primary: #003366;
-      --primary-hover: #001f3f;
-      --accent: #28a745;
-      --bg: #f0f2f5;
-      --card-bg: #ffffff;
-      --border: #dee2e6;
-      --text-dark: #1a1a1a;
-      --text-muted: #6c757d;
-      --dead-vessel-color: #d9534f;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDA Quotation - Mostafa Hakim Shipping Lines Ltd.</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
 
-    body {
-      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text-dark);
-      padding: 10px;
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    .company-header {
-      max-width: 1000px;
-      margin: 10px auto;
-      text-align: center;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      border-bottom: 4px solid var(--primary);
-    }
-
-    .logo-img {
-      max-height: 80px;
-      margin-bottom: 10px;
-    }
-
-    .company-header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-      color: var(--text-dark);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .company-header p {
-      margin: 5px 0 0;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .container {
-      max-width: 1000px;
-      background: var(--card-bg);
-      padding: 25px;
-      border-radius: 12px;
-      margin: 15px auto;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    h2,
-    h3 {
-      text-align: center;
-      color: var(--primary);
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      border-bottom: 2px solid var(--bg);
-      padding-bottom: 15px;
-    }
-
-    .input-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #eee;
-    }
-
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    label {
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-
-    input[type="number"] {
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-size: 16px;
-    }
-
-    .checkbox-row {
-      grid-column: 1 / -1;
-      display: flex;
-      gap: 12px;
-      padding-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .checkbox-row label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      background: #fff;
-      padding: 8px 14px;
-      border-radius: 20px;
-      border: 1px solid #ddd;
-      transition: 0.3s;
-    }
-
-    .dead-label {
-      border-color: var(--dead-vessel-color) !important;
-      color: var(--dead-vessel-color);
-      font-weight: bold !important;
-    }
-
-    .calc-btn {
-      grid-column: 1 / -1;
-      padding: 14px;
-      font-size: 1rem;
-      font-weight: bold;
-      background-color: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
-
-    .table-container {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-
-    th {
-      background: #f1f3f5;
-      padding: 12px;
-      border-bottom: 2px solid var(--border);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      text-align: left;
-    }
-
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #f1f1f1;
-      font-size: 0.9rem;
-    }
-
-    .right {
-      text-align: right;
-      font-family: "Courier New", Courier, monospace;
-      font-weight: 700;
-    }
-
-    .remarks {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      font-style: italic;
-    }
-
-    .manual-input {
-      width: 90px !important;
-      padding: 6px !important;
-      text-align: right;
-      border: 1px dashed var(--border) !important;
-    }
-
-    .total-row {
-      background: #e7f3ff;
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.1rem;
-    }
-
-    .grand-total-row {
-      background: var(--primary) !important;
-    }
-
-    .grand-total-row td,
-    .grand-total-row .right,
-    .grand-total-row .remarks {
-      color: #ffffff !important;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .surcharge-row {
-      background-color: #fff5f5;
-    }
-
-    @media (max-width: 768px) {
-      td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 12px;
-        width: 45%;
-        text-align: left;
-        font-weight: 700;
-        color: var(--text-muted);
-        font-size: 0.7rem;
-        text-transform: uppercase;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <header class="company-header">
-    <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no"
-      alt="Mostafa Hakim Shipping Logo" class="logo-img">
-    <h1>Mostafa Hakim Shipping Lines Limited</h1>
-    <p>218, D.T. Road, Dewanhat, Chattogram - 4100. Bangladesh.</p>
-  </header>
-
-  <div class="container">
-    <h2>PDA / PDQ Online Calculator</h2>
-    <div class="input-grid">
-      <div class="input-group">
-        <label>Gross Tonnage (GRT)</label>
-        <input type="number" id="grt" value="0" oninput="calc()" />
-      </div>
-      <div class="input-group">
-        <label>Net Tonnage (NRT)</label>
-        <input type="number" id="nrt" value="0" oninput="calc()" />
-      </div>
-      <div class="checkbox-row">
-
-        <label id="oilLbl"><input type="checkbox" id="oil" onchange="calc()" /> OIL TANKER</label>
-        <label id="ihmLbl"><input type="checkbox" id="ihm" onchange="calc()" /> IHM REPORT</label>
-        <label id="crewLbl"><input type="checkbox" id="crewChk" onchange="calc()" /> CREW REPATRIATION</label>
-        <label class="dead-label"><input type="checkbox" id="deadVessel" onchange="calc()" /> DEAD VESSEL</label>
-      </div>
-      <button class="calc-btn" onclick="calc()">Calculate PDA</button>
-    </div>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Description</th>
-            <th style="text-align: right">Amount (USD)</th>
-            <th>Remarks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-label="Description" id="desc_i1">Port dues charges to Chittagong Port Authority @ USD 0.306 per GRT
-            </td>
-            <td data-label="Amount" class="right" id="res_i1">0.00</td>
-            <td data-label="Remarks" class="remarks">GRT × 0.306</td>
-          </tr>
-          <tr id="deadRow1" class="hidden surcharge-row">
-            <td data-label="Description"><strong>(+) 50% Additional Port Dues Charges (Dead Vessel)</strong></td>
-            <td data-label="Amount" class="right" id="res_dead1">0.00</td>
-            <td data-label="Remarks" class="remarks">50% of Port Dues</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Port pilot age charges at actual @ USD 0.1200 of GRT</td>
-            <td data-label="Amount" class="right" id="res_i2">0.00</td>
-            <td data-label="Remarks" class="remarks">As per Tariff</td>
-          </tr>
-          <tr id="deadRow2" class="hidden surcharge-row">
-            <td data-label="Description"><strong>(+) 100% Additional Tug Charges (Dead Vessel)</strong></td>
-            <td data-label="Amount" class="right" id="res_dead2">0.00</td>
-            <td data-label="Remarks" class="remarks">100% of Tug Ch.</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Port tug charges mandatory minimum @ USD as per Port Tariff</td>
-            <td data-label="Amount" class="right" id="res_i3">0.00</td>
-            <td data-label="Remarks" class="remarks">Port Tariff</td>
-          </tr>
-          <tr>
-            <td data-label="Description" id="desc_vat">15% VAT include on Total Port Dues</td>
-            <td data-label="Amount" class="right" id="res_i4">0.00</td>
-            <td class="remarks" id="vatText">15% on 1,2,3</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Custom light dues per NRT 10TK. (+25% VAT/AIT)</td>
-            <td data-label="Amount" class="right" id="res_i5">0.00</td>
-            <td class="remarks">(NRT×10+25%)/120</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Expenses in relation to arrival, documentation, and port health formalities.
-            </td>
-            <td data-label="Amount" class="right"><input id="m6" type="number" value="1000" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">Manual</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Custom Supplementary IGM acceptance expenses</td>
-            <td data-label="Amount" class="right"><input id="m7" type="number" value="700" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">Manual</td>
-          </tr>
-          <tr id="oilRow" class="hidden">
-            <td data-label="Description">Explosive NOC & Inspection with Tug Hire</td>
-            <td data-label="Amount" class="right"><input id="oilAmt" type="number" value="1000" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">Oil Tanker</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Custom Team & Rummage Team tug Boat hire</td>
-            <td data-label="Amount" class="right"><input id="m9" type="number" value="700" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">Manual</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Custom Supplementary IGM acceptance (Custom House)</td>
-            <td data-label="Amount" class="right"><input id="m10" type="number" value="700" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">Manual</td>
-          </tr>
-          <tr id="ihmRow" class="hidden">
-            <td data-label="Description">IHM Inspection & Report Team</td>
-            <td data-label="Amount" class="right"><input id="ihmAmt" type="number" value="2000" class="manual-input"
-                oninput="calc()" /></td>
-            <td data-label="Remarks" class="remarks">IHM Report</td>
-          </tr>
-          <tr>
-            <td data-label="Description">20% Source Tax/Vat for central bank</td>
-            <td data-label="Amount" class="right"><input id="m12" type="number" value="150" class="manual-input"
-                oninput="calc()" /></td>
-            <td class="remarks">Manual</td>
-          </tr>
-          <tr>
-            <td data-label="Description">Agency fees</td>
-            <td data-label="Amount" class="right"><input id="m13" type="number" value="750" class="manual-input"
-                oninput="calc()" /></td>
-            <td class="remarks">Manual</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="container" id="beforeCrewBox">
-    <table>
-      <tr class="total-row">
-        <td style="width: 50%">Total Port DA in USD</td>
-        <td class="right" id="res_beforeCrew" style="width: 30%">0.00</td>
-        <td class="remarks" style="width: 20%; text-align: center">USD</td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="container hidden" id="crewBox">
-    <h3>Crew Repatriation Expenses</h3>
-    <div class="input-grid">
-      <div class="input-group"><label>No. of Crew</label><input type="number" id="crewNo" value="20" oninput="calc()" />
-      </div>
-      <div class="input-group"><label>Govt. Rate / Crew</label><input type="number" id="govRate" value="120"
-          oninput="calc()" /></div>
-      <div class="input-group"><label>Hotel Rate</label><input type="number" id="hotelRate" value="60"
-          oninput="calc()" /></div>
-      <div class="input-group"><label>Day</label><input type="number" id="hotelDay" value="2" oninput="calc()" /></div>
-      <div class="input-group"><label>Transportation</label><input type="number" id="crewTransport" value="400"
-          oninput="calc()" /></div>
-    </div>
-    <div class="table-container">
-      <table>
-        <tbody>
-          <tr>
-            <td>Govt. Repatriation formalities</td>
-            <td class="right" id="res_crewGovt">0.00</td>
-            <td class="remarks">Crew × Rate</td>
-          </tr>
-          <tr>
-            <td>Hotel expenses including Fooding</td>
-            <td class="right" id="res_crewHotel">0.00</td>
-            <td class="remarks">Crew × Rate × Days</td>
-          </tr>
-          <tr>
-            <td>Transportation (Yard/Hotel/Airport)</td>
-            <td class="right" id="res_crewTrans">0.00</td>
-            <td class="remarks">Actual</td>
-          </tr>
-          <tr style="background: #fafafa; font-weight: 700;">
-            <td>Crew Repatriation Total</td>
-            <td class="right" id="res_crewTotal">0.00</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="container">
-    <table>
-      <tr class="total-row grand-total-row">
-        <td style="width: 50%">GRAND TOTAL</td>
-        <td class="right" id="res_grand" style="width: 30%">0.00</td>
-        <td class="remarks" style="width: 20%; text-align: center">USD</td>
-      </tr>
-    </table>
-  </div>
-
-  <script>
-    function roundBD(x) {
-      let d = x - Math.floor(x);
-      return d <= 0.5 ? Math.floor(x) : Math.floor(x) + 1;
-    }
-
-    function calc() {
-      const g = parseFloat(document.getElementById("grt").value) || 0;
-      const n = parseFloat(document.getElementById("nrt").value) || 0;
-      const isDead = document.getElementById("deadVessel").checked;
-
-      // 1. Port Dues
-      const v1 = roundBD(g * 0.306);
-
-      // 2. Dead Vessel Logic: 50% Surcharge on Port Dues
-      let deadSurcharge1 = 0;
-      if (isDead) {
-        deadSurcharge1 = roundBD(v1 * 0.50);
-        document.getElementById("deadRow1").classList.remove("hidden");
-      } else {
-        document.getElementById("deadRow1").classList.add("hidden");
-      }
-      document.getElementById("res_dead1").innerText = deadSurcharge1.toFixed(2);
-
-      // 3. Pilotage
-      let v2;
-      if (g <= 10000) { v2 = 1200; } else { const roundedGRT = Math.ceil(g / 1000) * 1000; v2 = roundBD(roundedGRT * 0.12); }
-
-      // 4. Tug Charges
-      const v3 = g >= 20001 ? 6830 : g >= 10001 ? 4100 : g >= 5001 ? 2460 : 1230;
-
-      // 5. Dead Vessel Logic: 100% Surcharge on Tug Charges
-      let deadSurcharge2 = 0;
-      if (isDead) {
-        deadSurcharge2 = v3; // 100% of Tug Charges
-        document.getElementById("deadRow2").classList.remove("hidden");
-      } else {
-        document.getElementById("deadRow2").classList.add("hidden");
-      }
-      document.getElementById("res_dead2").innerText = deadSurcharge2.toFixed(2);
-
-      // 6. VAT (Calculated on Dues + Pilotage + Tug + Dead Surcharges)
-      const vB = v1 + v2 + v3 + deadSurcharge1 + deadSurcharge2;
-      const v4 = roundBD(vB * 0.15);
-
-      // 7. Light Dues
-      const v5 = roundBD((n * 10 * 1.25) / 120);
-
-      // 8. Totals
-      let beforeCrewTotal = v1 + v2 + v3 + v4 + v5 + deadSurcharge1 + deadSurcharge2 +
-        (parseFloat(document.getElementById("m6").value) || 0) +
-        (parseFloat(document.getElementById("m7").value) || 0) +
-        (parseFloat(document.getElementById("m9").value) || 0) +
-        (parseFloat(document.getElementById("m10").value) || 0) +
-        (parseFloat(document.getElementById("m12").value) || 0) +
-        (parseFloat(document.getElementById("m13").value) || 0);
-
-      const isOil = document.getElementById("oil").checked;
-      document.getElementById("oilRow").classList.toggle("hidden", !isOil);
-      if (isOil) beforeCrewTotal += parseFloat(document.getElementById("oilAmt").value) || 0;
-
-      const isIhm = document.getElementById("ihm").checked;
-      document.getElementById("ihmRow").classList.toggle("hidden", !isIhm);
-      if (isIhm) beforeCrewTotal += parseFloat(document.getElementById("ihmAmt").value) || 0;
-
-      // 9. Crew Section Logic (Hide if Dead Vessel)
-      const crewLbl = document.getElementById("crewLbl");
-      const crewBox = document.getElementById("crewBox");
-      let crewTotal = 0;
-
-      if (isDead) {
-        crewLbl.classList.add("hidden");
-        crewBox.classList.add("hidden");
-        document.getElementById("crewChk").checked = false;
-      } else {
-        crewLbl.classList.remove("hidden");
-        const isCrew = document.getElementById("crewChk").checked;
-        if (isCrew) {
-          crewBox.classList.remove("hidden");
-          const cN = parseFloat(document.getElementById("crewNo").value) || 0;
-          const cG = cN * (parseFloat(document.getElementById("govRate").value) || 0);
-          const cH = cN * (parseFloat(document.getElementById("hotelRate").value) || 0) * (parseFloat(document.getElementById("hotelDay").value) || 0);
-          const cT = parseFloat(document.getElementById("crewTransport").value) || 0;
-          crewTotal = cG + cH + cT;
-          document.getElementById("res_crewGovt").innerText = cG.toFixed(2);
-          document.getElementById("res_crewHotel").innerText = cH.toFixed(2);
-          document.getElementById("res_crewTrans").innerText = cT.toFixed(2);
-          document.getElementById("res_crewTotal").innerText = crewTotal.toFixed(2);
-        } else {
-          crewBox.classList.add("hidden");
+        :root {
+            --navy-dark: #0f172a;
+            --navy-blue: #1e3a8a;
+            --amber-gold: #fbbf24;
+            --primary: #003366;
+            --primary-hover: #001f3f;
+            --bg: #f8fafc;
+            --border: #e2e8f0;
+            --dead-vessel: #be123c;
         }
-      }
 
-      const grandTotal = beforeCrewTotal + crewTotal;
-      document.getElementById("res_i1").innerText = v1.toFixed(2);
-      document.getElementById("res_i2").innerText = v2.toFixed(2);
-      document.getElementById("res_i3").innerText = v3.toFixed(2);
-      document.getElementById("res_i4").innerText = v4.toFixed(2);
-      document.getElementById("res_i5").innerText = v5.toFixed(2);
-      document.getElementById("res_beforeCrew").innerText = beforeCrewTotal.toLocaleString(undefined, { minimumFractionDigits: 2 });
-      document.getElementById("res_grand").innerText = grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 });
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-      document.getElementById("desc_i1").innerHTML = `Port dues charges to Chittagong Port Authority @ USD 0.306 per GRT for ${g.toLocaleString()} MT`;
-      document.getElementById("desc_vat").innerHTML = `In-addition Circular of NBR to be added 15% VAT include on Total Port Dues Amount i.e. USD ${vB.toFixed(2)} ×15%`;
-    }
+        /* Header Styles */
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)),
+                url('https://images.unsplash.com/photo-1494412519320-aa613dfb7738?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
 
-    window.onload = calc;
-  </script>
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            border-radius: 50%;
+            border: 2px dashed var(--amber-gold);
+            opacity: 0.3;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeInUp 0.6s ease forwards; }
+
+        /* PDA Calculator Layout Styles */
+        .main-content {
+            flex: 1;
+            padding: 0 15px 60px;
+            margin-top: -80px; 
+            position: relative;
+            z-index: 20;
+        }
+
+        .container-box {
+            max-width: 1000px;
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .pda-header {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--navy-dark);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--navy-blue);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+        }
+
+        .checkbox-row {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-row label {
+            background: white;
+            padding: 0.6rem 1rem;
+            border-radius: 2rem;
+            border: 1px solid var(--border);
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .dead-label {
+            color: var(--dead-vessel) !important;
+            border-color: var(--dead-vessel) !important;
+        }
+
+        .calc-btn {
+            grid-column: 1 / -1;
+            background: var(--navy-blue);
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .calc-btn:hover { transform: translateY(-2px); background: var(--navy-dark); }
+
+        /* Table Design */
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: #f8fafc;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #64748b;
+            border-bottom: 2px solid var(--border);
+        }
+        td { padding: 1rem; border-bottom: 1px solid #f1f5f9; font-size: 0.95rem; }
+        .right { text-align: right; font-weight: 800; color: var(--navy-dark); }
+        .remarks { font-size: 0.8rem; color: #94a3b8; font-style: italic; }
+
+        .manual-input {
+            width: 90px;
+            padding: 6px;
+            border: 1px dashed #cbd5e1;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .total-row { background: #f0f9ff; color: var(--navy-blue); font-weight: 900; font-size: 1.2rem; }
+        .grand-total-row { background: var(--navy-dark) !important; color: white !important; }
+        .grand-total-row td, .grand-total-row .right { color: white !important; }
+
+        .hidden { display: none !important; }
+        .surcharge-row { background-color: #fff1f2; }
+    </style>
+</head>
+<body>
+
+    <header class="hero-bg text-white pt-16 pb-32 px-4 relative">
+        <div class="max-w-5xl mx-auto relative z-10 animate-fade-in text-center">
+            <div class="mb-8 flex justify-center">
+                <div class="logo-container bg-white p-1 rounded-full shadow-2xl">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no" alt="Mostafa Hakim Logo" class="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white">
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-2 uppercase">Mostafa Hakim</h1>
+            <h2 class="text-amber-400 font-bold tracking-[0.15em] md:tracking-[0.3em] uppercase text-lg md:text-2xl mb-8">
+                Shipping Lines Limited
+            </h2>
+            <div class="flex flex-col items-center justify-center space-y-2 text-slate-300">
+                <div class="flex items-center space-x-2 text-xs md:text-base bg-black/20 backdrop-blur-sm py-2 px-6 rounded-full border border-white/10">
+                    <i class="fas fa-map-marker-alt text-amber-500"></i>
+                    <address class="not-italic font-light">218, D.T. Road, Dewanhat, Chattogram-4100, Bangladesh.</address>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container-box">
+            <h2 class="pda-header">
+                <i class="fas fa-file-invoice-dollar text-blue-800"></i>
+                PDA Quotation
+            </h2>
+            
+            <div class="input-grid">
+                <div class="input-group">
+                    <label>Gross Tonnage (GRT)</label>
+                    <input type="number" id="grt" value="0" oninput="calc()" />
+                </div>
+                <div class="input-group">
+                    <label>Net Tonnage (NRT)</label>
+                    <input type="number" id="nrt" value="0" oninput="calc()" />
+                </div>
+                <div class="checkbox-row">
+                    <label><input type="checkbox" id="oil" onchange="calc()" /> OIL TANKER</label>
+                    <label><input type="checkbox" id="ihm" onchange="calc()" /> IHM REPORT</label>
+                    <label id="crewLbl"><input type="checkbox" id="crewChk" onchange="calc()" /> CREW REPATRIATION</label>
+                    <label class="dead-label"><input type="checkbox" id="deadVessel" onchange="calc()" /> DEAD VESSEL</label>
+                </div>
+                <button class="calc-btn" onclick="calc()">Update Quotation</button>
+            </div>
+
+            <div class="table-container mt-8">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description of Charges</th>
+                            <th class="text-right">Amount (USD)</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id="desc_i1">Port dues charges to Chittagong Port Authority @ USD 0.306 per GRT</td>
+                            <td class="right" id="res_i1">0.00</td>
+                            <td class="remarks">GRT × 0.306</td>
+                        </tr>
+                        <tr id="deadRow1" class="hidden surcharge-row">
+                            <td><strong>(+) 50% Additional Port Dues (Dead Vessel)</strong></td>
+                            <td class="right" id="res_dead1">0.00</td>
+                            <td class="remarks">Surcharge</td>
+                        </tr>
+                        <tr>
+                            <td>Port pilot age charges at actual @ USD 0.1200</td>
+                            <td class="right" id="res_i2">0.00</td>
+                            <td class="remarks">Tariff</td>
+                        </tr>
+                        <tr id="deadRow2" class="hidden surcharge-row">
+                            <td><strong>(+) 100% Additional Tug Charges (Dead Vessel)</strong></td>
+                            <td class="right" id="res_dead2">0.00</td>
+                            <td class="remarks">Surcharge</td>
+                        </tr>
+                        <tr>
+                            <td>Port tug charges mandatory minimum (Port Tariff)</td>
+                            <td class="right" id="res_i3">0.00</td>
+                            <td class="remarks">Actual</td>
+                        </tr>
+                        <tr>
+                            <td id="desc_vat">15% VAT on Total Port Dues</td>
+                            <td class="right" id="res_i4">0.00</td>
+                            <td class="remarks" id="vatText">15% Tax</td>
+                        </tr>
+                        <tr>
+                            <td>Custom light dues per NRT 10TK. (+25% VAT)</td>
+                            <td class="right" id="res_i5">0.00</td>
+                            <td class="remarks">Govt rate</td>
+                        </tr>
+                        <tr>
+                            <td>Arrival, documentation, and health formalities</td>
+                            <td class="right"><input id="m6" type="number" value="1000" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Supplementary IGM acceptance</td>
+                            <td class="right"><input id="m7" type="number" value="700" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                        <tr id="oilRow" class="hidden">
+                            <td>Explosive NOC & Inspection with Tug Hire</td>
+                            <td class="right"><input id="oilAmt" type="number" value="1000" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Oil Tanker</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Team & Rummage Boat hire</td>
+                            <td class="right"><input id="m9" type="number" value="700" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                        <tr>
+                            <td>Custom Supplementary IGM (Custom House)</td>
+                            <td class="right"><input id="m10" type="number" value="700" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                        <tr id="ihmRow" class="hidden">
+                            <td>IHM Inspection & Report Team</td>
+                            <td class="right"><input id="ihmAmt" type="number" value="2000" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">IHM Report</td>
+                        </tr>
+                        <tr>
+                            <td>20% Source Tax/Vat for central bank</td>
+                            <td class="right"><input id="m12" type="number" value="150" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                        <tr>
+                            <td>Agency fees</td>
+                            <td class="right"><input id="m13" type="number" value="750" class="manual-input" oninput="calc()" /></td>
+                            <td class="remarks">Manual</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="container-box" id="beforeCrewBox">
+            <table>
+                <tr class="total-row">
+                    <td style="width: 50%">Total Port DA in USD</td>
+                    <td class="right" id="res_beforeCrew" style="width: 30%">0.00</td>
+                    <td class="remarks" style="width: 20%; text-align: center">USD</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="container-box hidden" id="crewBox">
+            <h3 class="text-xl font-bold text-slate-800 mb-4 border-b pb-2 text-center uppercase">Crew Repatriation Expenses</h3>
+            <div class="input-grid">
+                <div class="input-group"><label>No. of Crew</label><input type="number" id="crewNo" value="20" oninput="calc()" /></div>
+                <div class="input-group"><label>Govt. Rate</label><input type="number" id="govRate" value="120" oninput="calc()" /></div>
+                <div class="input-group"><label>Hotel Rate</label><input type="number" id="hotelRate" value="60" oninput="calc()" /></div>
+                <div class="input-group"><label>Day</label><input type="number" id="hotelDay" value="2" oninput="calc()" /></div>
+                <div class="input-group"><label>Transport</label><input type="number" id="crewTransport" value="400" oninput="calc()" /></div>
+            </div>
+            <table class="mt-4">
+                <tbody>
+                    <tr><td>Govt. Repatriation formalities</td><td class="right" id="res_crewGovt">0.00</td></tr>
+                    <tr><td>Hotel expenses including Fooding</td><td class="right" id="res_crewHotel">0.00</td></tr>
+                    <tr><td>Transportation (Yard/Hotel/Airport)</td><td class="right" id="res_crewTrans">0.00</td></tr>
+                    <tr class="font-bold bg-slate-50"><td>Sub-Total Crew Expenses</td><td class="right" id="res_crewTotal">0.00</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-box">
+            <table>
+                <tr class="total-row grand-total-row">
+                    <td style="width: 50%; padding: 1.5rem">GRAND TOTAL PDA</td>
+                    <td class="right" id="res_grand" style="width: 30%">0.00</td>
+                    <td class="remarks" style="width: 20%; text-align: center; color: white !important">USD</td>
+                </tr>
+            </table>
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 text-slate-400 py-12 px-4 border-t border-slate-900 mt-auto">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col items-center space-y-10">
+                <div class="text-center">
+                    <div class="mb-4 flex justify-center">
+                        <div class="bg-white p-1 rounded-full shadow-lg inline-block">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no" alt="Logo" class="h-14 w-14 rounded-full border-2 border-slate-100">
+                        </div>
+                    </div>
+                    <p class="text-white font-bold tracking-wider text-lg uppercase">Mostafa Hakim Shipping Lines Limited</p>
+                    <div class="w-16 h-1 bg-amber-500/30 mx-auto mt-2 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm w-full max-w-5xl text-center">
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Landline</p>
+                        <p class="text-slate-300 font-medium">+88-031-720228, 716471</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Handphone</p>
+                        <p class="text-slate-300 font-medium">+88 01819 328962</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Facsimile</p>
+                        <p class="text-slate-300 font-medium">+88 031 715263</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Official Email</p>
+                        <a href="mailto:m.shahin_alam@yahoo.com" class="text-amber-400 hover:text-amber-300 font-medium">m.shahin_alam@yahoo.com</a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 pt-4">
+                    <a href="https://wa.me/8801819328962" target="_blank" class="flex items-center space-x-3 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-500 px-6 py-3 rounded-full transition-all border border-emerald-600/30 group">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span class="text-sm font-semibold tracking-wide">WhatsApp Support</span>
+                    </a>
+                    <a href="mailto:m.shahin_alam@yahoo.com" class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-900 border border-slate-800 hover:border-amber-500 hover:text-amber-400 transition-all shadow-xl text-white">
+                        <i class="fas fa-envelope text-lg"></i>
+                    </a>
+                </div>
+
+                <p class="text-[10px] uppercase tracking-widest text-slate-600">© 2026 Mostafa Hakim Shipping Lines Ltd.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // LOGIC PRESERVED EXACTLY AS REQUESTED
+        function roundBD(x) {
+            let d = x - Math.floor(x);
+            return d <= 0.5 ? Math.floor(x) : Math.floor(x) + 1;
+        }
+
+        function calc() {
+            const g = parseFloat(document.getElementById("grt").value) || 0;
+            const n = parseFloat(document.getElementById("nrt").value) || 0;
+            const isDead = document.getElementById("deadVessel").checked;
+
+            const v1 = roundBD(g * 0.306);
+
+            let deadSurcharge1 = 0;
+            if (isDead) {
+                deadSurcharge1 = roundBD(v1 * 0.50);
+                document.getElementById("deadRow1").classList.remove("hidden");
+            } else {
+                document.getElementById("deadRow1").classList.add("hidden");
+            }
+            document.getElementById("res_dead1").innerText = deadSurcharge1.toFixed(2);
+
+            let v2;
+            if (g <= 10000) { 
+                v2 = 1200; 
+            } else { 
+                const roundedGRT = Math.ceil(g / 1000) * 1000; 
+                v2 = roundBD(roundedGRT * 0.12); 
+            }
+
+            const v3 = g >= 20001 ? 6830 : g >= 10001 ? 4100 : g >= 5001 ? 2460 : 1230;
+
+            let deadSurcharge2 = 0;
+            if (isDead) {
+                deadSurcharge2 = v3; 
+                document.getElementById("deadRow2").classList.remove("hidden");
+            } else {
+                document.getElementById("deadRow2").classList.add("hidden");
+            }
+            document.getElementById("res_dead2").innerText = deadSurcharge2.toFixed(2);
+
+            const vB = v1 + v2 + v3 + deadSurcharge1 + deadSurcharge2;
+            const v4 = roundBD(vB * 0.15);
+
+            const v5 = roundBD((n * 10 * 1.25) / 120);
+
+            let beforeCrewTotal = v1 + v2 + v3 + v4 + v5 + deadSurcharge1 + deadSurcharge2 +
+                (parseFloat(document.getElementById("m6").value) || 0) +
+                (parseFloat(document.getElementById("m7").value) || 0) +
+                (parseFloat(document.getElementById("m9").value) || 0) +
+                (parseFloat(document.getElementById("m10").value) || 0) +
+                (parseFloat(document.getElementById("m12").value) || 0) +
+                (parseFloat(document.getElementById("m13").value) || 0);
+
+            const isOil = document.getElementById("oil").checked;
+            document.getElementById("oilRow").classList.toggle("hidden", !isOil);
+            if (isOil) beforeCrewTotal += parseFloat(document.getElementById("oilAmt").value) || 0;
+
+            const isIhm = document.getElementById("ihm").checked;
+            document.getElementById("ihmRow").classList.toggle("hidden", !isIhm);
+            if (isIhm) beforeCrewTotal += parseFloat(document.getElementById("ihmAmt").value) || 0;
+
+            const crewLbl = document.getElementById("crewLbl");
+            const crewBox = document.getElementById("crewBox");
+            let crewTotal = 0;
+
+            if (isDead) {
+                crewLbl.classList.add("hidden");
+                crewBox.classList.add("hidden");
+                document.getElementById("crewChk").checked = false;
+            } else {
+                crewLbl.classList.remove("hidden");
+                const isCrew = document.getElementById("crewChk").checked;
+                if (isCrew) {
+                    crewBox.classList.remove("hidden");
+                    const cN = parseFloat(document.getElementById("crewNo").value) || 0;
+                    const cG = cN * (parseFloat(document.getElementById("govRate").value) || 0);
+                    const cH = cN * (parseFloat(document.getElementById("hotelRate").value) || 0) * (parseFloat(document.getElementById("hotelDay").value) || 0);
+                    const cT = parseFloat(document.getElementById("crewTransport").value) || 0;
+                    crewTotal = cG + cH + cT;
+                    document.getElementById("res_crewGovt").innerText = cG.toFixed(2);
+                    document.getElementById("res_crewHotel").innerText = cH.toFixed(2);
+                    document.getElementById("res_crewTrans").innerText = cT.toFixed(2);
+                    document.getElementById("res_crewTotal").innerText = crewTotal.toFixed(2);
+                } else {
+                    crewBox.classList.add("hidden");
+                }
+            }
+
+            const grandTotal = beforeCrewTotal + crewTotal;
+            document.getElementById("res_i1").innerText = v1.toFixed(2);
+            document.getElementById("res_i2").innerText = v2.toFixed(2);
+            document.getElementById("res_i3").innerText = v3.toFixed(2);
+            document.getElementById("res_i4").innerText = v4.toFixed(2);
+            document.getElementById("res_i5").innerText = v5.toFixed(2);
+            document.getElementById("res_beforeCrew").innerText = beforeCrewTotal.toLocaleString(undefined, { minimumFractionDigits: 2 });
+            document.getElementById("res_grand").innerText = grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 });
+
+            document.getElementById("desc_i1").innerHTML = `Port dues charges to Chittagong Port Authority @ USD 0.306 per GRT for ${g.toLocaleString()} MT`;
+            document.getElementById("desc_vat").innerHTML = `15% VAT on Total Port Dues Amount (USD ${vB.toFixed(2)})`;
+        }
+        window.onload = calc;
+    </script>
 </body>
-
 </html>

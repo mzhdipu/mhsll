@@ -1,239 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ship Tonnage Calculator</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+        :root {
+            --navy-dark: #0f172a;
+            --navy-blue: #1e3a8a;
+            --amber-gold: #fbbf24;
+        }
+
+        /* Header Styles */
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)),
+                url('https://images.unsplash.com/photo-1494412519320-aa613dfb7738?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 2px dashed var(--amber-gold);
+            opacity: 0.3;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Modernized Calculator Styles */
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f7f9;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
             display: flex;
             justify-content: center;
-            padding: 40px 10px;
+            padding: 0 15px 60px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 20;
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+        .calc-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
-        .company-header {
+
+        .calc-title {
+            color: var(--navy-dark);
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 35px;
+            letter-spacing: -0.02em;
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e5e7eb;
+            justify-content: center;
+            gap: 12px;
         }
-        .company-logo {
-            width: 80px;
-            height: 80px;
-            object-fit: contain;
-            background: #eee; /* placeholder background if image fails */
-            border-radius: 4px;
+
+        .calc-title i {
+            color: var(--navy-blue);
         }
-        .company-info {
-            text-align: left;
-        }
-        .company-name {
-            font-weight: 800;
-            font-size: 18px;
-            color: #1e3a8a;
-            margin: 0;
-            line-height: 1.2;
-        }
-        .company-address {
-            font-size: 13px;
-            color: #6b7280;
-            margin-top: 5px;
-            line-height: 1.4;
-        }
-        h2 {
-            color: #1e3a8a;
-            text-align: center;
+
+        .input-wrapper {
+            position: relative;
             margin-bottom: 25px;
-            font-size: 22px;
         }
-        .input-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        .button-group {
+
+        .input-label {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .reset-btn {
-            background-color: #ef4444;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .output-box {
-            background: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 25px;
-            border: 1px solid #e5e7eb;
-        }
-        .output-item {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #f3f4f6;
-            padding-bottom: 8px;
-        }
-        .label-text {
-            font-weight: bold;
-            color: #1d4ed8;
-            font-size: 11px;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #475569;
+            font-size: 14px;
+            margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-        .result-wrapper {
+
+        .styled-input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--navy-dark);
+            transition: all 0.3s ease;
+        }
+
+        .styled-input:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: var(--navy-blue);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+        }
+
+        .reset-btn {
+            width: 100%;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover {
+            background: #fecaca;
+        }
+
+        .result-container {
+            display: grid;
+            gap: 20px;
+        }
+
+        .result-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .result-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .result-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 4px;
+            margin-bottom: 10px;
         }
-        .result-text {
-            color: #111827;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        .words-text {
-            color: #d97706;
-            font-weight: 600;
-            font-size: 15px;
-            margin-top: 8px;
-            display: block;
-            line-height: 1.6;
-            background: #fffbeb;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #fef3c7;
-        }
-        .copy-btn {
-            background: #e5e7eb;
-            color: #4b5563;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 4px;
+
+        .result-label {
             font-size: 11px;
-            cursor: pointer;
-            font-weight: bold;
+            font-weight: 800;
+            color: var(--navy-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
-        .copy-btn.copied {
+
+        .val-figures {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--navy-dark);
+        }
+
+        .val-words {
+            font-size: 16px;
+            font-weight: 600;
+            color: #b45309;
+            background: #fffbeb;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--amber-gold);
+            line-height: 1.5;
+        }
+
+        .action-copy {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #64748b;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-copy:hover {
+            border-color: var(--navy-blue);
+            color: var(--navy-blue);
+        }
+
+        .action-copy.copied {
             background: #10b981;
             color: white;
+            border-color: #10b981;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="company-header">
-            <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no" alt="LOGO" class="company-logo">
-            <div class="company-info">
-                <p class="company-name">MOSTAFA HAKIM SHIPPING LINES LTD.</p>
-                <p class="company-address">
-                    218, D.T. Road, Dewanhat,<br>
-                    Chattogram-4100, Bangladesh.
+
+    <header class="hero-bg text-white pt-16 pb-32 px-4 relative">
+        <div class="max-w-5xl mx-auto relative z-10 animate-fade-in text-center">
+            <div class="mb-8 flex justify-center">
+                <div class="logo-container bg-white p-1 rounded-full shadow-2xl">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no"
+                        alt="Mostafa Hakim Logo" class="h-20 w-20 md:h-28 md:w-28 rounded-full border-4 border-white">
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-2 uppercase">Mostafa Hakim</h1>
+            <h2
+                class="text-amber-400 font-bold tracking-[0.15em] md:tracking-[0.3em] uppercase text-lg md:text-2xl mb-8">
+                Shipping Lines Limited
+            </h2>
+            <div class="flex flex-col items-center justify-center space-y-2 text-slate-300">
+                <div
+                    class="flex items-center space-x-2 text-xs md:text-base bg-black/20 backdrop-blur-sm py-2 px-6 rounded-full border border-white/10">
+                    <i class="fas fa-map-marker-alt text-amber-500"></i>
+                    <address class="not-italic font-light">218, D.T. Road, Dewanhat, Chattogram-4100, Bangladesh.
+                    </address>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="calc-card">
+            <h2 class="calc-title">
+                <i class="fas fa-anchor"></i>
+                Vessel Value Calculator
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-wrapper">
+                    <label class="input-label">
+                        <i class="fas fa-weight-hanging"></i> Metric Tons (MT)
+                    </label>
+                    <input type="text" id="mtInput" class="styled-input" placeholder="0.00" onkeyup="calculate()">
+                </div>
+
+                <div class="input-wrapper">
+                    <label class="input-label">
+                        <i class="fas fa-tags"></i> Price Per LT
+                    </label>
+                    <input type="text" id="rateInput" class="styled-input" value="430" onkeyup="calculate()">
+                </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetForm()">
+                <i class="fas fa-undo-alt"></i> Reset Calculation
+            </button>
+
+            <div class="result-container">
+                <div class="result-card">
+                    <div class="result-header">
+                        <span class="result-label">Calculated LT (MT ÷ 1.016)</span>
+                        <button class="action-copy" onclick="copyValue('ltResult', this)">
+                            <i class="far fa-copy"></i> COPY
+                        </button>
+                    </div>
+                    <div id="ltResult" class="val-figures">0.00</div>
+                </div>
+
+                <div class="result-card" style="border-left: 4px solid var(--navy-blue);">
+                    <div class="result-header">
+                        <span class="result-label">Final Value (Figures)</span>
+                        <button class="action-copy" onclick="copyValue('finalFigures', this)">
+                            <i class="far fa-copy"></i> COPY
+                        </button>
+                    </div>
+                    <div id="finalFigures" class="val-figures">0.00</div>
+                </div>
+
+                <div class="result-card">
+                    <div class="result-header">
+                        <span class="result-label">Final Value (In Words)</span>
+                        <button class="action-copy" onclick="copyValue('finalWords', this)">
+                            <i class="far fa-copy"></i> COPY ALL
+                        </button>
+                    </div>
+                    <div id="finalWords" class="val-words">Please enter values to begin...</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 text-slate-400 py-12 px-4 border-t border-slate-900 mt-auto">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col items-center space-y-10">
+                <div class="text-center">
+                    <div class="mb-4 flex justify-center">
+                        <div class="bg-white p-1 rounded-full shadow-lg inline-block">
+                            <img src="https://lh3.googleusercontent.com/a/ACg8ocKU2XQgKeyYCOFYS24vmORjjsDgpdnofR2Lq_SzC2MHXPLZJC_I=s260-c-no"
+                                alt="Logo" class="h-14 w-14 rounded-full border-2 border-slate-100">
+                        </div>
+                    </div>
+                    <p class="text-white font-bold tracking-wider text-lg uppercase">Mostafa Hakim Shipping Lines
+                        Limited</p>
+                    <div class="w-16 h-1 bg-amber-500/30 mx-auto mt-2 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-sm w-full max-w-5xl text-center">
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Landline</p>
+                        <p class="text-slate-300 font-medium">+88-031-720228, 716471</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Handphone</p>
+                        <p class="text-slate-300 font-medium">+88 01819 328962</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Facsimile</p>
+                        <p class="text-slate-300 font-medium">+88 031 715263</p>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-slate-500 uppercase tracking-widest font-bold text-[10px]">Official Email</p>
+                        <a href="mailto:m.shahin_alam@yahoo.com"
+                            class="text-amber-400 hover:text-amber-300 font-medium">m.shahin_alam@yahoo.com</a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 pt-4">
+                    <a href="https://wa.me/8801819328962" target="_blank"
+                        class="flex items-center space-x-3 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-500 px-6 py-3 rounded-full transition-all border border-emerald-600/30 group">
+                        <i class="fab fa-whatsapp text-2xl"></i>
+                        <span class="text-sm font-semibold tracking-wide">WhatsApp Support</span>
+                    </a>
+                    <a href="mailto:m.shahin_alam@yahoo.com"
+                        class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-900 border border-slate-800 hover:border-amber-500 hover:text-amber-400 transition-all shadow-xl text-white">
+                        <i class="fas fa-envelope text-lg"></i>
+                    </a>
+                </div>
+
+                <p class="text-[10px] uppercase tracking-widest text-slate-600">© 2026 Mostafa Hakim Shipping Lines Ltd.
                 </p>
             </div>
         </div>
-
-        <h2>Vessel Value Calculator</h2>
-
-        <div class="input-group">
-            <label>MT (Metric Tons):</label>
-            <input type="text" id="mtInput" placeholder="Enter MT" onkeyup="calculate()">
-        </div>
-
-        <div class="input-group">
-            <label>Price Per LT:</label>
-            <input type="text" id="rateInput" value="430" onkeyup="calculate()">
-        </div>
-
-        <div class="button-group">
-            <button class="reset-btn" onclick="resetForm()">Reset Values</button>
-        </div>
-
-        <div class="output-box">
-            <div class="output-item">
-                <span class="label-text">LT (MT ÷ 1.016)</span>
-                <div class="result-wrapper">
-                    <span id="ltResult" class="result-text">0.00</span>
-                    <button class="copy-btn" onclick="copyValue('ltResult', this)">COPY</button>
-                </div>
-            </div>
-
-            <div class="output-item">
-                <span class="label-text">Final Value (Figures)</span>
-                <div class="result-wrapper">
-                    <span id="finalFigures" class="result-text">0.00</span>
-                    <button class="copy-btn" onclick="copyValue('finalFigures', this)">COPY</button>
-                </div>
-            </div>
-
-            <div class="output-item">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span class="label-text">Final Value (In Words)</span>
-                    <button class="copy-btn" onclick="copyValue('finalWords', this)">COPY ALL WORDS</button>
-                </div>
-                <span id="finalWords" class="words-text">Please enter values...</span>
-            </div>
-        </div>
-    </div>
+    </footer>
 
     <script>
-        // Updated Copy Function with Fallback
+        // LOGIC PRESERVED EXACTLY AS REQUESTED
         function copyValue(elementId, btn) {
             const text = document.getElementById(elementId).innerText;
-            if (text === "0.00" || text === "Please enter values...") return;
+            if (text === "0.00" || text.includes("Please enter")) return;
 
-            // Attempt modern clipboard API
             if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showSuccess(btn);
-                });
+                navigator.clipboard.writeText(text).then(() => { showSuccess(btn); });
             } else {
-                // Fallback for non-https or older browsers
                 const textArea = document.createElement("textarea");
                 textArea.value = text;
                 document.body.appendChild(textArea);
                 textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showSuccess(btn);
-                } catch (err) {
-                    console.error('Unable to copy', err);
-                }
+                try { document.execCommand('copy'); showSuccess(btn); } catch (err) { }
                 document.body.removeChild(textArea);
             }
         }
 
         function showSuccess(btn) {
-            const originalText = btn.innerText;
-            btn.innerText = "COPIED!";
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> COPIED!';
             btn.classList.add('copied');
             setTimeout(() => {
-                btn.innerText = originalText;
+                btn.innerHTML = originalHTML;
                 btn.classList.remove('copied');
             }, 1500);
         }
@@ -242,7 +427,6 @@
             if (num === 0 || isNaN(num)) return 'Zero';
             const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
             const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-
             function convert(n) {
                 let res = "";
                 if (n >= 100) { res += ones[Math.floor(n / 100)] + " Hundred "; n %= 100; }
@@ -250,21 +434,13 @@
                 if (n > 0) { res += ones[n] + " "; }
                 return res.trim();
             }
-
             let mainNumber = Math.floor(num);
             let decimalPart = Math.round((num - mainNumber) * 100);
             let str = "United State Dollar ";
-
-            if (mainNumber >= 1000000) {
-                str += convert(Math.floor(mainNumber / 1000000)) + " Million ";
-                mainNumber %= 1000000;
-            }
-            if (mainNumber >= 1000) {
-                str += convert(Math.floor(mainNumber / 1000)) + " Thousand ";
-                mainNumber %= 1000;
-            }
+            if (mainNumber >= 1000000) { str += convert(Math.floor(mainNumber / 1000000)) + " Million "; mainNumber %= 1000000; }
+            if (mainNumber >= 1000) { str += convert(Math.floor(mainNumber / 1000)) + " Thousand "; mainNumber %= 1000; }
             str += convert(mainNumber);
-            if (decimalPart > 0) { str += " & Cent " + convert(decimalPart); } 
+            if (decimalPart > 0) { str += " & Cent " + convert(decimalPart); }
             else { str += " & Cent Zero"; }
             return str.trim() + " Only";
         }
@@ -284,7 +460,7 @@
             } else {
                 document.getElementById('ltResult').innerText = "0.00";
                 document.getElementById('finalFigures').innerText = "0.00";
-                document.getElementById('finalWords').innerText = "Please enter values...";
+                document.getElementById('finalWords').innerText = "Please enter values to begin...";
             }
         }
 
@@ -293,8 +469,9 @@
             document.getElementById('rateInput').value = "430";
             document.getElementById('ltResult').innerText = "0.00";
             document.getElementById('finalFigures').innerText = "0.00";
-            document.getElementById('finalWords').innerText = "Please enter values...";
+            document.getElementById('finalWords').innerText = "Please enter values to begin...";
         }
     </script>
 </body>
+
 </html>
